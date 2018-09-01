@@ -50,14 +50,17 @@ int main()
 				continue;
 			}
 
-			int count = 0;
+			int count;
 			for (const auto & route : busToStops)
 			{
+				count = 0;
 				cout << "Bus " << route.first << ": ";
 				for (const auto & stopName : route.second)
 				{
-					if (count == 0)
+					if (count != 0)
 						cout << " ";
+
+					count++;
 
 					cout << stopName;
 				}
@@ -77,16 +80,36 @@ int main()
 				continue;
 			}
 
-			int count = 0;
+			int count;
 			const vector<string> & stops = busToStops[busName];
-			for (const auto & stopName : stops)
+			for (const auto & stopName : stops) // list of stops for that specific bus from the input
 			{
-				cout << "Stop " << stopName << ":" << endl;
-				// and now, search through every other bus to see if any of the stops match
-				for (const auto & crossBus : stopToBuses)
+				cout << "Stop " << stopName << ": ";
+				// and now, given the stop, see what other buses stop here besides the one I am looking at
+				if (stopToBuses[stopName].size() == 0 || stopToBuses[stopName].size() == 1)
 				{
-					cout << " ";
+					cout << "no interchange";
 				}
+				else
+				{
+					count = 0;
+					const vector<string> & buses = stopToBuses[stopName];
+					for (const string & b : buses)
+					{
+						// check if its the same stop
+						if (b == busName)
+							continue;
+
+						if (count != 0)
+							cout << " ";
+
+
+						cout << b;
+						count++;
+					}
+				}
+
+				cout << endl;
 			}
 		}
 		else if (op == "BUSES_FOR_STOP")
@@ -94,19 +117,20 @@ int main()
 			string stopName;
 			cin >> stopName;
 			// stops collection is empty or there is no such key
-			if (stopToBuses.size() == 0  || stopToBuses[stopName].size() == 0)
+			if (stopToBuses.size() == 0 || stopToBuses[stopName].size() == 0)
 			{
 				cout << "No stop" << endl;
 				continue;
 			}
-				
+
 			int count = 0;
 			const vector<string> & buses = stopToBuses[stopName];
 			for (const auto & busName : buses)
 			{
-				if (count == 0)
+				if (count != 0)
 					cout << " ";
 
+				count++;
 				cout << busName;
 			}
 			cout << endl;
