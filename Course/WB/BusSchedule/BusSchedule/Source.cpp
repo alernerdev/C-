@@ -74,14 +74,14 @@ int main()
 			cin >> busName;
 
 			// stops collection is empty or there is no such key
-			if (busToStops.size() == 0 || busToStops[busName].size() == 0)
+			if (busToStops.size() == 0 || busToStops.count(busName) == 0)
 			{
 				cout << "No bus" << endl;
 				continue;
 			}
 
-			int count;
 			const vector<string> & stops = busToStops[busName];
+			int count;
 			for (const auto & stopName : stops) // list of stops for that specific bus from the input
 			{
 				cout << "Stop " << stopName << ": ";
@@ -117,7 +117,7 @@ int main()
 			string stopName;
 			cin >> stopName;
 			// stops collection is empty or there is no such key
-			if (stopToBuses.size() == 0 || stopToBuses[stopName].size() == 0)
+			if (stopToBuses.size() == 0 || stopToBuses.count(stopName) == 0)
 			{
 				cout << "No stop" << endl;
 				continue;
